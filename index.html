@@ -54,8 +54,32 @@
   <script>
     function dataset() {
       return {
-        data: false,
-        async fetchData() {}
+        list: [],
+        name: '',
+        type: 'ほのお',
+        weight: '',
+        ability: '',
+        async fetchData() {
+          const res = await fetch('data.json');
+          if (!res.ok) {
+            alert('データの取得に失敗しました');
+            return;
+          }
+          const data = await res.json();
+          this.list = data.list;
+        },
+        addItem() {
+          if (!this.name || !this.weight || !this.ability) return;
+          this.list.push({
+            name: this.name,
+            type: this.type,
+            weight: Number(this.weight),
+            ability: this.ability
+          });
+          this.name = '';
+          this.weight = '';
+          this.ability = '';
+        }
       };
     }
   </script>
