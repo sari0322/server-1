@@ -18,9 +18,10 @@
 
   <body v-scope="dataset()">
     <p>
-      <button @click="fetchData">データ取得</button>
+      <button v-if="!list.length" @click="fetchData">データ取得</button>
+      <button v-else @click="clearData">閉じる</button>
     </p>
-    <table border="1">
+    <table border="1" v-if="list.length">
       <tr>
         <th>名前</th>
         <th>タイプ</th>
@@ -34,22 +35,6 @@
         <td v-text="pkmn.ability"></td>
       </tr>
     </table>
-    <form @submit.prevent="addItem">
-      <label>name: <input v-model="name" /></label><br />
-      <label for="type">type:</label>
-      <select id="type" v-model="type">
-        <option>ほのお</option>
-        <option>みず</option>
-        <option>でんき</option>
-        <option>あく</option>
-        <option>エスパー</option>
-      </select>
-      <br />
-      <label>weight: <input v-model="weight" /></label><br />
-      <label>ability: <input v-model="ability" /></label><br />
-
-      <button>登録</button>
-    </form>
   </body>
   <script>
     function dataset() {
@@ -61,24 +46,11 @@
         ability: '',
         async fetchData() {
           const res = await fetch('data.json');
-          if (!res.ok) {
-            alert('データの取得に失敗しました');
-            return;
-          }
           const data = await res.json();
           this.list = data.list;
         },
-        addItem() {
-          if (!this.name || !this.weight || !this.ability) return;
-          this.list.push({
-            name: this.name,
-            type: this.type,
-            weight: Number(this.weight),
-            ability: this.ability
-          });
-          this.name = '';
-          this.weight = '';
-          this.ability = '';
+        clearData() {
+          this.list = [];
         }
       };
     }
