@@ -8,7 +8,7 @@
       table,
       th,
       td {
-        border: solid rgba(36, 61, 254, 0.694) 3px;
+        border: solid rgba(36, 61, 254, 1) 3px;
         border-collapse: collapse;
         padding: 5px 10px;
       }
@@ -72,7 +72,7 @@
           this.list.push({
             name: this.name,
             type: this.type,
-            weight: parseFloat(this.weight),
+            weight: this.weight,
             ability: this.ability
           });
           this.name = '';
