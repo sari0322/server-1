@@ -20,24 +20,12 @@
     <p>
       <button @click="fetchData">データ取得</button>
     </p>
-    <table v-if="data">
-      <tr>
-        <th v-for="category of ['名前', 'タイプ', '重さ', '特性']">{{category}}</th>
-      </tr>
-      <tr v-for="item of data">
-        <td v-for="d of item">{{d}}</td>
-      </tr>
-    </table>
   </body>
   <script>
     function dataset() {
       return {
         data: false,
         async fetchData() {
-          const res = await fetch('/data.json');
-          const obj = await res.json();
-          this.data = obj.list;
-          console.log(JSON.stringify(this.data, null, 2));
         }
       };
     }
