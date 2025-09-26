@@ -8,7 +8,7 @@
       table,
       th,
       td {
-        border: solid black 1px;
+        border: solid rgba(36, 61, 254, 0.694) 3px;
         border-collapse: collapse;
         padding: 5px 10px;
       }
@@ -35,6 +35,21 @@
         <td v-text="pkmn.ability"></td>
       </tr>
     </table>
+    <form v-if="list.length" @submit.prevent="addItem">
+      <label>name: <input v-model="name" /></label><br />
+      <label for="type">type:</label>
+      <select id="type" v-model="type">
+        <option>ほのお</option>
+        <option>みず</option>
+        <option>でんき</option>
+        <option>あく</option>
+        <option>エスパー</option>
+      </select>
+      <br />
+      <label>weight: <input v-model="weight" /></label><br />
+      <label>ability: <input v-model="ability" /></label><br />
+      <button>登録</button>
+    </form>
   </body>
   <script>
     function dataset() {
@@ -51,6 +66,18 @@
         },
         clearData() {
           this.list = [];
+        },
+        addItem() {
+          if (!this.name || !this.weight || !this.ability) return;
+          this.list.push({
+            name: this.name,
+            type: this.type,
+            weight: parseFloat(this.weight),
+            ability: this.ability
+          });
+          this.name = '';
+          this.weight = '';
+          this.ability = '';
         }
       };
     }
